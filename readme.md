@@ -1,5 +1,9 @@
 # loadXN
 
+[![Node.js](https://img.shields.io/badge/node.js-20%2B-green.svg)](https://nodejs.org/)
+[![GitHub issues](https://img.shields.io/github/issues/olutobiogunsola/loadXN.svg)](https://github.com/YOUR_USERNAME/loadXN/issues)
+[![License](https://img.shields.io/github/license/olutobiogunsola/loadXN.svg)](LICENSE)
+
 A programmable HTTP load generator designed to generate controlled workloads and analyze system behavior under load.
 
 loadXN provides configurable **request-rate control, concurrency limits, load scheduling, request lifecycle tracking, and latency analysis**. It is designed around the same fundamental concerns involved in building reliable distributed systems and performance-testing infrastructure.
