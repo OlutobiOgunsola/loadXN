@@ -1,8 +1,11 @@
 # loadXN
 
-[![Node.js](https://img.shields.io/badge/node.js-20%2B-green.svg)](https://nodejs.org/)
-[![GitHub issues](https://img.shields.io/github/issues/olutobiogunsola/loadXN.svg)](https://github.com/YOUR_USERNAME/loadXN/issues)
+```md
 [![License](https://img.shields.io/github/license/olutobiogunsola/loadXN.svg)](LICENSE)
+[![Node.js](https://img.shields.io/badge/Node.js-20%2B-green.svg)](https://nodejs.org/)
+[![GitHub stars](https://img.shields.io/github/stars/olutobiogunsola/loadXN.svg)](https://github.com/olutobiogunsola/loadXN/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/olutobiogunsola/loadXN.svg)](https://github.com/olutobiogunsola/loadXN/issues)
+```
 
 A programmable HTTP load generator designed to generate controlled workloads and analyze system behavior under load.
 
