@@ -1,0 +1,8 @@
+test:
+  duration: 10000
+  rate: 1000
+  maxConcurrency: 100
+
+target:
+  url: http://localhost:8000
+  method: GET
