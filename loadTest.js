@@ -10,15 +10,18 @@ class LoadTest {
         this.duration = duration;
         this.rate = rate;
         this.maxConcurrency = maxConcurrency;
+        this.initTS = Date.now();
 
         this.metrics = new Metrics({
             outputURL: './output.csv',
             outputFormat: 'csv',
+            initTS: this.initTS
         });
         this.state = new State({
             duration,
             rate,
-            maxConcurrency
+            maxConcurrency,
+            initTS: this.initTS
         });
         this.httpClient = new HttpClient(URL, 'get');
         this.scheduler = new Scheduler(

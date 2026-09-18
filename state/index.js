@@ -1,7 +1,7 @@
 const eventBus = require('../events');
 
 class State {
-    constructor({rate, maxConcurrency, duration}) {
+    constructor({rate, maxConcurrency, duration, initTS}) {
         this.rate = rate;
         this.maxConcurrency = maxConcurrency;
 
@@ -9,7 +9,7 @@ class State {
         this.totalStarted = 0;
         this.totalCompleted = 0;
         this.lifecycle = 'CREATED';
-        this.initTS = 0;
+        this.initTS = initTS;
         this.duration = duration;
 
         eventBus.on('requestStarted', () => {
@@ -45,7 +45,7 @@ class State {
             totalStarted: this.totalStarted,
             initTS: this.initTS,
         });
-        
+
         this.lifecycle =
             this.activeRequests > 0
                 ? 'STOPPING'
@@ -54,7 +54,6 @@ class State {
 
     startLoadTest() {
         this.lifecycle = 'RUNNING';
-        this.initTS = Date.now();
     }
 }
 

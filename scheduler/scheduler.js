@@ -13,22 +13,19 @@ class Scheduler {
             }
 
             // check if there is bandwidth for more requests
-            const requestsDeficit = this.getRequestsDeficit();
-            const ceilingDeficit = this.appState.maxConcurrency - this.appState.activeRequests;
-
-            this.pendingRequestsCount = Math.min(requestsDeficit, ceilingDeficit);
+            const requestsDeficit = this.getSchedulingDemand();
 
             this.appMetrics.write(
-                `active: ${this.appState.activeRequests}, :::::: started: ${this.appState.totalStarted}, :::::: completed: ${this.appState.totalCompleted}, :::::: expected: ${Date.now() - this.appState.initTS}, :::::: deficit: ${requestsDeficit}, :::::: available: ${ceilingDeficit}, :::::: dispatch: ${this.pendingRequestsCount}`,
+                `active: ${this.appState.activeRequests}, :::::: started: ${this.appState.totalStarted}, :::::: completed: ${this.appState.totalCompleted}, :::::: expected: ${Date.now() - this.appState.initTS}, :::::: dispatch: ${this.requestsDeficit}`,
                 './metrics.csv',
                 true
             )
 
-            this.requestClient.generateRequests(this.pendingRequestsCount);
+            this.requestClient.generateRequests(requestsDeficit);
         })
     };
 
-    getRequestsDeficit() {
+    getSchedulingDemand() {
         const elapsed = Date.now() - this.appState.initTS;
 
         console.log(`${Math.floor(elapsed / 1000)}seconds running ::::::::::::: `)
@@ -38,19 +35,22 @@ class Scheduler {
             this.appState.breakLoadTest();
         }
 
-        const expected = Math.ceil(elapsed * this.appState.rate / 1000);
+        const expectedRequests = Math.ceil(elapsed * this.appState.rate / 1000);
         
-        // const deficit = expected - this.appState.totalStarted;
+        const rateDemand = Math.max(0, expectedRequests - this.appState.totalStarted);
 
-        const deficit = this.appState.maxConcurrency - this.appState.activeRequests;
+        const availableConcurrency = this.appState.maxConcurrency - this.appState.activeRequests;
+
+        const demand = Math.min(availableConcurrency, rateDemand);
         
         console.log({
             elapsed,
-            expected,
+            expectedRequests,
             totalStarted: this.appState.totalStarted,
-            deficit
+            availableConcurrency
         });
-        return deficit;
+
+        return demand;
     }
 
     runLoadTest() {
